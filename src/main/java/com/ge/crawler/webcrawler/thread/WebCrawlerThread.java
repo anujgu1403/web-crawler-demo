@@ -16,15 +16,14 @@ import com.ge.crawler.webcrawler.util.WebCrawlerConstants;
  *          process and can be used in multi-threading
  * 
  */
-public class WebCrawlerThread extends Thread {
+public class WebCrawlerThread implements Runnable {
 
-	// Declared set to hold unqiue values of each types of pages
+	// Declared set to hold unique values of each types of pages
 	Set<String> addressNodeList = new HashSet<String>();
 	Set<String> errorPagesList = new HashSet<String>();
 	Set<String> skippedPagesList = new HashSet<String>();
 	Set<String> visitedPagesList = new HashSet<String>();
 	String searchKeyword = "";
-	JsonNode rootNode = null;
 	JsonNode pagesNode = null;
 	String filePath = "";
 
@@ -41,9 +40,9 @@ public class WebCrawlerThread extends Thread {
 			if (null != filePath && !filePath.isEmpty()) {
 				byte[] jsonData = Files.readAllBytes(Paths.get(filePath));
 				ObjectMapper objectMapper = new ObjectMapper();
-				rootNode = objectMapper.readTree(jsonData);
+				JsonNode rootNode = objectMapper.readTree(jsonData);
 
-				// To read the main pages node from json which will be used for further
+				// To read the main pages node from JSON which will be used for further
 				// processing
 				pagesNode = rootNode.get(WebCrawlerConstants.PAGE_NODE);
 			} else {
@@ -65,7 +64,8 @@ public class WebCrawlerThread extends Thread {
 			fillAllAddressNodesFromJson(pagesNode);
 		if (null != pagesNode && !searchKeyword.isEmpty())
 			searchLinkedPagesForGivenPage(pagesNode, searchKeyword);
-		displayResultLists();
+		//if (visitedPagesList.size() != 0 || skippedPagesList.size() != 0 || errorPagesList.size() != 0)
+			displayResultLists();
 	}
 
 	/**
