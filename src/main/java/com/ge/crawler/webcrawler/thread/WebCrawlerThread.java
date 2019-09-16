@@ -55,7 +55,7 @@ public class WebCrawlerThread implements Runnable {
 	}
 
 	/**
-	 * run method is overriden to invoke other methods which process Node JSON
+	 * run method is overridden to invoke other methods which process Node JSON
 	 */
 	@Override
 	public void run() {
@@ -63,8 +63,7 @@ public class WebCrawlerThread implements Runnable {
 		if (null != pagesNode)
 			fillAllAddressNodesFromJson(pagesNode);
 		if (null != pagesNode && !searchKeyword.isEmpty())
-			searchLinkedPagesForGivenPage(pagesNode, searchKeyword);
-		//if (visitedPagesList.size() != 0 || skippedPagesList.size() != 0 || errorPagesList.size() != 0)
+			searchLinkedPagesForGivenPage(pagesNode, searchKeyword);		
 			displayResultLists();
 	}
 
